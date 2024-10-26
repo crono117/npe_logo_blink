@@ -1,0 +1,131 @@
+body {
+    background-color: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.logo-container {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.neon-logo {
+    max-width: 300px;
+    position: relative;
+    filter: brightness(0.3) contrast(1.2);
+    animation: initialDim 0.1s linear forwards;
+}
+
+.neon-logo.lit {
+    animation: fullLight 0.5s linear forwards;
+}
+
+@keyframes initialDim {
+    to {
+        filter: brightness(0.3) contrast(1.2);
+    }
+}
+
+@keyframes fullLight {
+    to {
+        filter: 
+            drop-shadow(0 0 10px rgba(255, 0, 222, 0.8))
+            drop-shadow(0 0 20px rgba(255, 0, 222, 0.6))
+            drop-shadow(0 0 30px rgba(0, 255, 255, 0.6))
+            brightness(1.2) contrast(1.2);
+    }
+}
+
+/* Horizontal sweep effect */
+.logo-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 0, 222, 0.4),
+        rgba(0, 255, 255, 0.6),
+        rgba(255, 0, 222, 0.4),
+        transparent
+    );
+    background-size: 200% 100%;
+    animation: horizontalSweep 4s linear infinite;
+}
+
+@keyframes horizontalSweep {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Vertical letter filling effect */
+.logo-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 0, 222, 0.4),
+        rgba(0, 255, 255, 0.6),
+        rgba(255, 0, 222, 0.4)
+    );
+    animation: verticalFill 6s linear infinite;
+}
+
+@keyframes verticalFill {
+    /* Initial state - all empty */
+    0% {
+        clip-path: inset(100% 67% 0 0);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    /* Fill N */
+    15% {
+        clip-path: inset(0 67% 0 0);
+    }
+    /* Start P */
+    20% {
+        clip-path: inset(100% 34% 0 33%);
+    }
+    /* Fill P */
+    30% {
+        clip-path: inset(0 34% 0 33%);
+    }
+    /* Start E */
+    35% {
+        clip-path: inset(100% 0 0 66%);
+    }
+    /* Fill E */
+    45% {
+        clip-path: inset(0 0 0 66%);
+    }
+    /* Hold full illumination */
+    70% {
+        clip-path: inset(0);
+        opacity: 1;
+    }
+    /* Fade out for next cycle */
+    75% {
+        opacity: 0;
+    }
+    100% {
+        clip-path: inset(0);
+        opacity: 0;
+    }
+}
